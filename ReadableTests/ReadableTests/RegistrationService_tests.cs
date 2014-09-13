@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FluentAssertions;
 using Moq;
 using ReadableTests.Builder;
 using TestsSwissArmyKnife;
@@ -13,26 +14,10 @@ namespace ReadableTests
     public class GIVEN_UserRegistrationService
     {
         [Fact]
-        public void THEN_returns_user_for_that_id()
+        public void THEN_credit_card_number_is_masked()
         {
             var expectedUser = new UserAccount("myName", "myEmail", DateTime.Parse("1990-10-10"), "123456789",
-                "password");
-
-            var service = new UserRegistrationService();
-            var mock = new Mock<IUserRepository>();
-            mock.Setup(o => o.GetUser(It.IsAny<int>())).Returns(expectedUser);
-            service.UsersRepository = mock.Object;
-
-            var returnedUser = service.GetUserInformation(123);
-
-            Assert.Equal(expectedUser, returnedUser);
-        }
-
-        [Fact]
-        public void THEN_returns_user_for_that_id_prettier()
-        {
-            var expectedUser = new UserAccount("myName", "myEmail", DateTime.Parse("1990-10-10"), "123456789",
-                "password");
+                "password", "4111222233337890");
 
             UserRegistrationService service = new BuildUserRegistrationService()
                 .ForAccount(123)
@@ -40,7 +25,7 @@ namespace ReadableTests
 
             var returnedUser = service.GetUserInformation(123);
 
-            Assert.Equal(expectedUser, returnedUser);
+            Assert.Equal("41**********7890", returnedUser.CreditCardNo);
         }
 
     }

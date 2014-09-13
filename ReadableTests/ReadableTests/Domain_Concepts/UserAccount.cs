@@ -15,8 +15,24 @@ namespace TestsSwissArmyKnife
             DateOfBirth = dateOfBirth;
             PhoneNumber = phoneNumber;
             Password = password;
+            CreditCardNo = "";
         }
 
+        public UserAccount(string name, string email, DateTime dateOfBirth, string phoneNumber, string password, string creditCardNo)
+        {
+            Name = name;
+            Email = email;
+            DateOfBirth = dateOfBirth;
+            PhoneNumber = phoneNumber;
+            Password = password;
+            CreditCardNo = MaskCc(creditCardNo);
+        }
+
+        private string MaskCc(string ccFull)
+        {
+            var maskChar = '#';
+            return ccFull.Substring(0, 2) + new string(maskChar, 10) + ccFull.Substring(12);
+        }
 
         public UserAccount(UserAccountRequest copyObject)
         {
@@ -32,5 +48,6 @@ namespace TestsSwissArmyKnife
         public DateTime DateOfBirth { get; private set; }
         public string PhoneNumber { get; private set; }
         public string Password { get; private set; }
+        public string CreditCardNo { get; private set; }
     }
 }
