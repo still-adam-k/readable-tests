@@ -19,8 +19,8 @@ namespace TestsSwissArmyKnife
 
         internal RegistrationResult RegisterUser(UserAccountRequest userAccountRequest)
         {
-            if (userAccountRequest.Email == null || userAccountRequest.Name == null ||
-                userAccountRequest.Password == null || userAccountRequest.DateOfBirth == DateTime.MinValue)
+            if (string.IsNullOrEmpty(userAccountRequest.Email) || string.IsNullOrEmpty(userAccountRequest.Name) ||
+                string.IsNullOrEmpty(userAccountRequest.Password) || userAccountRequest.DateOfBirth == DateTime.MinValue)
             {
                 return new TooFewDataPassed();
             }
