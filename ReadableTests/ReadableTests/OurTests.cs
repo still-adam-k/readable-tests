@@ -14,12 +14,12 @@ namespace TestsSwissArmyKnife
         [Fact]
         public void THEN_user_has_been_added()
         {
-            var userRequest = new BuildUserRequest();
+            var userRequest = new BuildUserRequest().WithPhoneNumber("123456789");
             var subject = new UserRegistrationService();
 
             subject.RegisterUser(userRequest);
 
-            Assert.Contains("123456789", subject.Users.Select(user => user.PhoneNumber));
+            subject.Users.Should().Contain(user => user.PhoneNumber == "123456789");
         }
 
         [Fact]
@@ -31,7 +31,7 @@ namespace TestsSwissArmyKnife
 
             var result = subject.RegisterUser(userRequest);
 
-            Assert.IsType<TooFewDataPassed>(result);
+            result.Should().BeOfType<TooFewDataPassed>();
         }
 
         [Fact]
@@ -43,7 +43,33 @@ namespace TestsSwissArmyKnife
 
             var result = subject.RegisterUser(userData);
 
-            Assert.IsType<UserIsTooYoung>(result);
+            result.Should().BeOfType<UserIsTooYoung>();
+
+        }
+
+        [Fact]
+        public void THEN_we_can_do_many_things_with_fluent_assertions()
+        {
+            var subject = new UserRegistrationService();
+            var userData = new BuildUserRequest()
+                .WithBirthDate("2010-10-01");
+
+            var result = subject.RegisterUser(userData);
+
+            subject.Invoking(x => x.RegisterUser(null)).ShouldThrow<NullReferenceException>();
+
+            subject.ExecutionTimeOf(x => x.RegisterUser(userData)).ShouldNotExceed(new TimeSpan(0, 0, 1));
+        }
+
+        [Fact]
+        public void THEN_we_can_use_value_comparison()
+        {
+            var userRequest = new UserAccountRequest() { Email = "foo@bar.com"};
+            var second_userRequest = new UserAccountRequest() { Email = "foo@bar.com" };
+
+
+            Assert.Equal(userRequest, second_userRequest);
+            //userRequest.ShouldBeEquivalentTo(second_userRequest);
         }
     }
 }
