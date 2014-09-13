@@ -5,13 +5,27 @@ using System.Text;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Newtonsoft.Json;
+using ReadableTests.Printing;
 using TestsSwissArmyKnife._01_Builder;
 using Xunit;
 
 namespace TestsSwissArmyKnife
 {
-    public class GIVEN_User_Registration_Service_and_User_Account_Request
+    public class GIVEN_User_Registration_Service_and_User_Account_Request : IDisposable
     {
+        private ConsolePrettyPrinter printer;
+
+        public GIVEN_User_Registration_Service_and_User_Account_Request()
+        {
+            printer = new ConsolePrettyPrinter();
+            printer.HijackConsole();
+        }
+        
+        public void Dispose()
+        {
+            printer.ReleaseConsole();
+        }
+        
         [Fact]
         public void THEN_user_has_been_added()
         {

@@ -65,7 +65,7 @@
     <Compile Include="Domain_Concepts\IUserRepository.cs" />
     <Compile Include="FluentAssertionShowoff.cs" />
     <Compile Include="OurTests.cs" />
-    <Compile Include="Printing\PrettyPrint.cs" />
+    <Compile Include="Printing\ConsolePrettyPrinter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Domain_Concepts\UserAccount.cs" />
     <Compile Include="Domain_Concepts\UserAccountRequest.cs" />
