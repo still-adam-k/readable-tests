@@ -25,7 +25,10 @@ namespace ReadableTests
 
             var returnedUser = service.GetUserInformation(123);
 
-            Assert.Equal("41**********7890", returnedUser.CreditCardNo);
+            returnedUser.CreditCardNo.Should()
+                .StartWith("41")
+                .And.EndWith("7890")
+                .And.HaveLength(16);
         }
 
     }
