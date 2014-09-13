@@ -29,64 +29,29 @@ namespace ReadableTests
             calculatedValue.Should().Be(value);
         }
 
-        [Fact]
-        public void Build_Expression_Test_1()
+        public static IEnumerable<object[]> SampleExpressionData
         {
-            var parameters = new[] { "2" };
-            var builder = new ExpressionBuilder();
-
-            var node = builder.BuildExpression(parameters);
-            var calculatedValue = node.CalculateValue();
-
-            calculatedValue.Should().Be(2);
+            get
+            {
+                yield return new object[] { 2, new string[] { "2" } };
+                yield return new object[] { 12, new string[] { "3", "+", "9" } };
+                yield return new object[] {4.5, new string[] { "2", "+", "5", "/", "2" } };
+                yield return new object[] { 46.5, new string[] { "2", "+", "3", "*", "89", "/", "6" } };
+                yield return new object[] { 20, new string[] { "2", "+", "3", "*", "8", "-", "6" } };
+            }
         }
 
-        [Fact]
-        public void Build_Expression_Test_2()
+        [Theory]
+        [PropertyData("SampleExpressionData")]
+        public void BuildExpressionTest_pretty(double value, string[] expressions)
         {
-            var parameters = new[] { "3","+","9" };
             var builder = new ExpressionBuilder();
 
-            var node = builder.BuildExpression(parameters);
+            var node = builder.BuildExpression(expressions);
             var calculatedValue = node.CalculateValue();
 
-            calculatedValue.Should().Be(12);
+            calculatedValue.Should().Be(value);
         }
 
-        [Fact]
-        public void Build_Expression_Test_3()
-        {
-            var parameters = new[] { "2","+","5","/","2" };
-            var builder = new ExpressionBuilder();
-
-            var node = builder.BuildExpression(parameters);
-            var calculatedValue = node.CalculateValue();
-
-            calculatedValue.Should().Be(4.5);
-        }
-
-        [Fact]
-        public void Build_Expression_Test_4()
-        {
-            var parameters = new[] { "2", "+", "3","*","89", "/", "6" };
-            var builder = new ExpressionBuilder();
-
-            var node = builder.BuildExpression(parameters);
-            var calculatedValue = node.CalculateValue();
-
-            calculatedValue.Should().Be(46.5);
-        }
-
-        [Fact]
-        public void Build_Expression_Test_5()
-        {
-            var parameters = new[] { "2", "+", "3", "*", "8", "-", "6" };
-            var builder = new ExpressionBuilder();
-
-            var node = builder.BuildExpression(parameters);
-            var calculatedValue = node.CalculateValue();
-
-            calculatedValue.Should().Be(20);
-        }
     }
 }
