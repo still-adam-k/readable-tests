@@ -60,6 +60,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Builder\BuildUserRegistration.cs" />
     <Compile Include="Builder\BuildUserRequest.cs" />
     <Compile Include="Domain_Concepts\IUserRepository.cs" />
     <Compile Include="OurTests.cs" />
@@ -67,6 +68,7 @@
     <Compile Include="Domain_Concepts\UserAccount.cs" />
     <Compile Include="Domain_Concepts\UserAccountRequest.cs" />
     <Compile Include="Domain_Concepts\UserRegistrationService.cs" />
+    <Compile Include="RegistrationService_tests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
