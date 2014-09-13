@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FluentAssertions;
+using Newtonsoft.Json;
 using TestsSwissArmyKnife._01_Builder;
 using Xunit;
 
@@ -14,12 +15,14 @@ namespace TestsSwissArmyKnife
         [Fact]
         public void THEN_user_has_been_added()
         {
-            var userRequest = new BuildUserRequest().WithPhoneNumber("123456789");
+            UserAccountRequest userRequest = new BuildUserRequest().WithPhoneNumber("123456789");
             var subject = new UserRegistrationService();
 
             subject.RegisterUser(userRequest);
 
             subject.Users.Should().Contain(user => user.PhoneNumber == "123456789");
+
+            Console.WriteLine(userRequest);
         }
 
         [Fact]
