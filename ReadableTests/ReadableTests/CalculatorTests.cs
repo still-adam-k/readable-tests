@@ -5,11 +5,26 @@ using System.Text;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Xunit;
+using Xunit.Extensions;
 
 namespace ReadableTests
 {
     public class CalculatorTests
     {
+        [Theory]
+        [InlineData("2", 2)]
+        [InlineData("2+7", 9)]
+        [InlineData("3*5", 15)]
+        [InlineData("2+9*7-5", 60)]
+        [InlineData("2+9*7/2-5", 28.5)]
+        public void CalculateTest(string expression, double value)
+        {
+            var calculator = new Calculator.Calculator();
+
+            var calculatedValue = calculator.Calculate(expression);
+            calculatedValue.Should().Be(value);
+        }
+
         [Fact]
         public void CalculateTest_one_Digit()
         {
